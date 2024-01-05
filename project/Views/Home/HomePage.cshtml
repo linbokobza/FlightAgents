@@ -1,0 +1,142 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+@model project.ViewModel.FlightViewModel
+@using project.Models
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <link rel="stylesheet" href="~/css/HomeStyle.css">
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+
+    <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+
+
+    <title>Travel Agency</title>
+</head>
+<body class="vsc-initialized" data-new-gr-c-s-check-loaded="14.1089.0" data-gr-ext-installed="">
+    <div id="booking" class="section">
+        <img id="logo-main" src="~/media/pngegg.png" width="300" alt="Logo Thing main logo">
+        <div class="signup" style="position: absolute; top: 10px; right: 10px; font-size: 50px;">
+            <a class="btn btn-info btn-lg" href="/home/Registration">SignUp / SignIn</a>
+        </div>
+        <div class="section-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-7 col-md-push-5">
+                        <div class="booking-cta">
+                            <form action="Booking" method="post">
+                                <table style="font-size:20px" class="sortable table table-hover" id="table" name="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Flight ID</th>
+                                            <th scope="col">Company name</th>
+                                            <th scope="col">From</th>
+                                            <th scope="col">To</th>
+                                            <th scope="col">Departures Date</th>
+                                            <th scope="col">Departures time</th>
+                                            <th scope="col">Arrival Date</th>
+                                            <th scope="col">Arrival Time</th>
+                                            <th scope="col">Price</th>
+                                            <th scope="col">Book</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (Flight f in Model.ShowFlights)
+                                        {
+                                            <tr scope="row">
+                                                <td id="fid1">@f.FlightID</td>
+                                                <td id="fid">@f.FlightCompanyName</td>
+                                                <td id="fid">@f.Departures</td>
+                                                <td id="fid">@f.Arrivals</td>
+                                                <td id="fid">@f.DeparturesDate.ToShortDateString()</td>
+                                                <td id="fid">@f.DeparturesTime</td>
+                                                <td id="fid">@f.ArrivalDate.ToShortDateString()</td>
+                                                <td id="fid">@f.ArrivalTime</td>
+                                                <td id="fid">@f.Price</td>
+                                                <td>
+                                                    <button id="book" onclick="fid('@f.FlightID', '@f.FlightCompanyName', '@f.Departures', '@f.Arrivals', '@f.DeparturesDate.ToShortDateString()',
+        '@f.DeparturesTime', '@f.ArrivalDate.ToShortDateString()', '@f.ArrivalTime', '@f.Price', '@f.SeatingCapacity')" class="btn btn-info" style="font-size:15px ">
+                                                        Book
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-md-pull-7">
+                        <div class="booking-form">
+                            <form action="SearchFlight" method="post">
+                                <div class="form-group">
+                                    <span class="form-label">From</span>
+                                    <input class="form-control" type="text" placeholder="Enter a destination" id="txtFrom" name="txtFrom">
+                                </div>
+                                <div class="form-group">
+                                    <span class="form-label">To</span>
+                                    <input class="form-control" type="text" placeholder="Enter a destination" id="txtTo" name="txtTo">
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <span class="form-label">Check In</span>
+                                            <input class="form-control" type="date" id="txtFlightDate" name="txtFlightDate">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <span class="form-label">Check out</span>
+                                            <input class="form-control" type="date" id="txtArrivalDate" name="txtArrivalDate">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <span class="form-label">Max Price (₪)</span>
+                                            <input class="form-control" type="number" id="txtPrice" name="txtPrice" placeholder="Max price">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-btn">
+                                    <button class="submit-btn" id="b">Check availability</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        //user enterd book
+        function fid(id, company, dep, arr, depDate, depTime, arrDate, arrTime, Price, capacity) {
+            localStorage.setItem("flightCapacity", capacity);
+            localStorage.setItem("flightid", id);
+            localStorage.setItem("flightCompany", company);
+            localStorage.setItem("flightDep", dep);
+            localStorage.setItem("flightArr", arr);
+            localStorage.setItem("flightDepDate", depDate);
+            localStorage.setItem("flightDepTime", depTime);
+            localStorage.setItem("flightArrDate", arrDate);
+            localStorage.setItem("flightArrTime", arrTime);
+            localStorage.setItem("flightPrice", Price);
+            localStorage.setItem("flightPass", pass);
+        }
+    </script>
+</body>
+</html>

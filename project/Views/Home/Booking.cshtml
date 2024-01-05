@@ -1,0 +1,345 @@
+﻿
+<!doctype html>
+<html>
+<head>
+    <meta charset='utf-8'>
+
+    <link href="~/css/booking.css" rel="stylesheet" />
+    <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/SendEmail.js"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=sb&enable-funding=venmo&currency=ILS" data-sdk-integration-source="button-factory"></script>
+    <script type="text/javascript">
+        (function () {
+            emailjs.init("FcE-i7Vj_MxssF3yc");
+        })();
+    </script>
+
+    <title>Booking</title>
+</head>
+<body className='snippet-body'>
+
+    <div class="container">
+        <div class="row m-0">
+            <div class="col-lg-7 pb-5 pe-lg-5">
+                <div class="row" style="font-weight:bold">
+                    <div class="col-12 p-5">
+                        <img src="~/media/R.png" style="width:500px; height:230px">
+                    </div>
+                    <div class="row m-0 bg-light">
+                        <div class="col-md-4 col-6 ps-30 pe-0 my-4">
+                            <p class="text-muted">Flight ID</p>
+                            <p class="h5"><span id="id">flightid</span></p>
+                        </div>
+                        <div class="col-md-4 col-6  ps-30 my-4">
+                            <p class="text-muted">Company name</p>
+                            <p class="h5 m-0"><span id="Company">flightcompany</span></p>
+                        </div>
+                        <div class="col-md-4 col-6 ps-30 my-4">
+                            <p class="text-muted">From</p>
+                            <p class="h5 m-0"><span id="Dep">flightDep</span></p>
+                        </div>
+                        <div class="col-md-4 col-6 ps-30 my-4">
+                            <p class="text-muted">To</p>
+                            <p class="h5 m-0"><span id="Arr">flightArr</span></p>
+                        </div>
+                        <div class="col-md-4 col-6 ps-30 my-4">
+                            <p class="text-muted">Deperture date</p>
+                            <p class="h5 m-0"><span id="DepDate">flightDepDate</span></p>
+                        </div>
+                        <div class="col-md-4 col-6 ps-30 my-4">
+                            <p class="text-muted">Deperture time</p>
+                            <p class="h5 m-0"><span id="DepTime">flightDepTime</span></p>
+                        </div>
+                        <div class="col-md-4 col-6 ps-30 my-4">
+                            <p class="text-muted">Arrival date</p>
+                            <p class="h5 m-0"><span id="ArrDate">flightArrDate</span></p>
+                        </div>
+                        <div class="col-md-4 col-6 ps-30 my-4">
+                            <p class="text-muted">Arrival time</p>
+                            <p class="h5 m-0"><span id="ArrTime">flightArrTime</span></p>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <span class="form-label">Passengers</span>
+                                <select class="form-control" id="passenger">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                    <option>8</option>
+                                    <option>9</option>
+                                    <option>10</option>
+                                </select>
+                                <input type="submit"  onclick="NumPass()" value="update"  class="btn btn-dark"/>
+                                <span class="select-arrow" ></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 p-0 ps-lg-4">
+                <div class="row m-0">
+                    <div class="col-12 px-4">
+
+                        <div class="d-flex justify-content-between mb-2">
+                            <p class="textmuted">Passengers number:</p>
+                            <p class="fs-14 fw-bold"><span id="Pass"></span></p>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <p class="textmuted">Ticket Price</p>
+                            <p class="fs-14 fw-bold"><span id="Price">flightPrice</span>₪</p>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <p class="textmuted fw-bold">Total Price</p>
+                            <div class="d-flex align-text-top ">
+                                <p class="fs-14 fw-bold"><span id="Total"></span>₪</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 px-0">
+                        <form>
+                            <div class="row bg-light m-0" style="height:300px;">
+                                <div class="col-12 px-4 my-4">
+                                    <p class="fw-bold" style="font-size:20px">Payment detail</p>
+                                </div>
+                                <div class="col-12 px-4">
+                                    <div class="d-flex mb-4">
+                                        <div class="">
+                                            <p class="text-muted">ID</p>
+                                            <input class="form-control" type="number" id="ID"
+                                                   placeholder="ID">
+                                        </div>
+                                        <div class=" w-100 d-flex flex-column align-items-end">
+                                            <br />
+                                            <br />
+                                            <input type="button" onclick="CheckSavedCard()" value="Check saved credit card" class="btn btn-dark" />
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex mb-4">
+                                        <span class="">
+                                            <p class="text-muted">Card number</p>
+                                            <input class="form-control" type="number" id="CardNumber"
+                                                   placeholder="XXXX-XXXX-XXXX-XXXX">
+                                        </span>
+
+                                        <div class=" w-100 d-flex flex-column align-items-end">
+                                            <p class="text-muted">Expires</p>
+                                            <input style="width:120px" class="form-control2" type="text" id="Expires" placeholder="MM/YY">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex mb-5">
+                                        <span class="me-5">
+                                            <p class="text-muted">Cardholder name</p>
+                                            <input class="form-control" type="text" id="CardHolderName"
+                                                   placeholder="FullName">
+                                        </span>
+                                        <div class="w-100 d-flex flex-column align-items-end">
+                                            <p class="text-muted">CVV</p>
+                                            <input class="form-control2" type="text" maxlength="3" id="CVV" placeholder="CVV">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row m-0">
+                                <div class="col-12  mb-4 p-0">
+                                    <div style="font-size:20px" class="btn btn-primary">
+                                        <button style="font-family: Tahoma;
+                                    color:white; background-color: transparent" type="button" onclick="Purchase()">
+                                            Purchase
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div id="smart-button-container">
+                            <div style="text-align: center;">
+                                <div id="paypal-button-container"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                var id = document.getElementById("id").innerHTML = localStorage.getItem("flightid");
+                var company=document.getElementById("Company").innerHTML = localStorage.getItem("flightCompany");
+                var Dep=document.getElementById("Dep").innerHTML = localStorage.getItem("flightDep");
+                var Arr=document.getElementById("Arr").innerHTML = localStorage.getItem("flightArr");
+                var DepDate=document.getElementById("DepDate").innerHTML = localStorage.getItem("flightDepDate");
+                var DepTime=document.getElementById("DepTime").innerHTML = localStorage.getItem("flightDepTime");
+                var ArrDate=document.getElementById("ArrDate").innerHTML = localStorage.getItem("flightArrDate");
+                var ArrTime=document.getElementById("ArrTime").innerHTML = localStorage.getItem("flightArrTime");
+                var price = document.getElementById("Price").innerHTML = localStorage.getItem("flightPrice");
+                document.getElementById("Pass").innerHTML = 1;
+                document.getElementById("Total").innerHTML = price;
+                var cap = localStorage.getItem("flightCapacity");
+                var num = document.getElementById("passenger").value;
+                var total = price;
+
+                //user enters number of passenger
+                function NumPass() {
+                    num = document.getElementById("passenger").value;
+                    if (parseInt(num) > parseInt(cap)) {
+                        alert("In this flight there's only " + cap + " seats left");
+                    }
+                    else {
+                        total = price * num;
+                        document.getElementById("Total").innerHTML = total;
+                        document.getElementById("Pass").innerHTML = num;
+                    }
+                }
+                function CheckSavedCard() {
+                    var CardHoladerName= document.getElementById("CardHolderName").value;
+                    var CardHoladerid= document.getElementById("ID").value;
+                    if (CardHoladerName == "" || CardHoladerid == "")
+                        alert("Please enter ID and card holder name");
+                    else {
+                        $.ajax({
+                            type: "POST",
+                            url: "Home/SearchCreditCard",
+                            data: {
+                                FullName: CardHoladerName,
+                                ID: CardHoladerid
+                            },
+                            dataType: "json",
+                            success: function (r)
+                            {
+                                if (r.status==="true")
+                                {
+                                    if (confirm("We found a credit card ending with " + r.card.substr(-4)+". Do you want to use it? "))
+                                    {
+                                        MakePayment();
+                                    }
+                                }
+                                else {
+                                    alert("There isn't saved credit card for this details");
+                                }
+                            }
+                        });
+                    }
+                }
+             //user enterd purchase button
+                function Purchase() {
+                        var CardHolderName = document.getElementById("CardHolderName").value;
+                        var CardHolderID = document.getElementById("ID").value;
+                        var CardCVV = document.getElementById("CVV").value;
+                        var CardExp = document.getElementById("Expires").value;
+                        var CardNumber = document.getElementById("CardNumber").value;
+
+                        if (CardHolderName == "" || CardHolderID == "" || CardCVV == "" || CardExp == "" || CardNumber == "") {
+                            alert("Please enter all details")
+                        }
+                        else {
+                            if (confirm("Do you want to save your credit card details for the next order ?")) {
+                                $.ajax({
+                                    type: "POST",
+                                    url: "Home/SaveCreditCard",
+                                    data: {
+                                        FullName: CardHolderName,
+                                        id: CardHolderID,
+                                        CardNumber: CardNumber,
+                                        CardExp: CardExp,
+                                        CVV: CardCVV
+                                    }
+                                });
+                            }
+                            MakePayment();
+                        }
+                }
+                function MakePayment() {
+                    $.ajax({
+                        type: "POST",
+                        url: "Home/Purchase",
+                        data: {
+                            FlightId: id,
+                            NumPass: num
+                        }
+                    });
+                    var BookingId = Math.floor(Math.random() * 10000) + 1;
+                    var mail = prompt("Payment Complete !\nplease enter mail to recive your booking details");
+                    if (mail != null && mail != "") {
+                        SendMail(mail, BookingId);
+                        AddBooking(BookingId);
+                    }
+                    else {
+                        AddBooking(BookingId);
+                        window.location.href = "Home";
+                    }
+                }
+
+                function SendMail(mail,BookingID) {
+                    var a = document.getElementById("CardHolderName").value;
+                    var params = {
+                        from_name: "Travel agency",
+                        to_name: a,
+                        booking_id: BookingID.toString(),
+                        Flight_company: company.toString(),
+                        From: Dep.toString(),
+                        F_date: DepDate.toString(),
+                        F_time: DepTime.toString(),
+                        To: Arr.toString(),
+                        T_date: ArrDate.toString(),
+                        T_time: ArrTime.toString(),
+                        Amount: num.toString(),
+                        email: mail
+                    }
+                    emailjs.send("service_n91ii0q", "template_vpoy1ba", params
+                    ).then(function (res) {
+                        alert("Email Sent!");
+                        window.location.href = "Home";
+                    })
+                }
+                function AddBooking(Bookingid) {
+                    $.ajax({
+                        type: "POST",
+                        url: "Home/AddBooking",
+                        data: {
+                            BookingID: Bookingid,
+                            FlightID: id,
+                            NumPassengers: num
+                        }
+                    });
+                }
+                function PayPal() {
+                    paypal.Buttons({
+                        style: {
+                            shape: 'rect',
+                            color: 'blue',
+                            layout: 'horizontal',
+                            label: 'paypal',
+                        },
+                        createOrder: function (data, actions) {
+                            return actions.order.create({
+                                purchase_units: [{ "amount": { "currency_code": "ILS", "value": parseInt(total) } }]
+                            });
+                        },
+                        onApprove: function (data, actions) {
+                            return actions.order.capture().then(function (orderData) {
+
+                                // Full available details
+                                console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+
+                                // Show a success message within this page, e.g.
+                                const element = document.getElementById('paypal-button-container');
+                                element.innerHTML = '';
+                                element.innerHTML = '<h3>Thank you for your payment!</h3>';
+
+                                // Or go to another URL:  actions.redirect('thank_you.html');
+                            });
+                        },
+                        onError: function (err) {
+                            console.log(err);
+                        }
+                    }).render('#paypal-button-container');
+                }
+                PayPal();
+            </script>
+        </div>
+        </div>
+    </body>
+</html>
